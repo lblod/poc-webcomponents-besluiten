@@ -10,9 +10,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  input: 'my-element.js',
+  input: 'decision-feed.js',
   output: {
-    file: 'my-element.bundled.js',
+    file: 'decision-feed.bundled.js',
     format: 'esm',
   },
   onwarn(warning) {

@@ -1,11 +1,16 @@
 /node_modules/
 /lib/
 /test/
+/demo/
+/card/
 custom-elements.json
 # top level source
-my-element.js
-my-element.js.map
-my-element.d.ts
-my-element.d.ts.map
+decision-feed.js
+decision-feed.js.map
+decision-feed.d.ts
+decision-feed.d.ts.map
+
 # only generated for size check
-my-element.bundled.js
+# decision-feed.bundled.js
+
+demo.html
