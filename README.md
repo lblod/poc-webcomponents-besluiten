@@ -1,4 +1,4 @@
-# Decision Feed LitElement Web Component
+# Decision Feed Web Component
 
 This project includes a custom LitElement component written in TypeScript.
 
