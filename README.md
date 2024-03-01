@@ -1,8 +1,14 @@
-# Decision Feed Web Component
+# Decision Feed LitElement Web Component
 
 This project includes a custom LitElement component written in TypeScript.
 
-The component, decision-feed, represents a feed of agendapunten. It fetches data from a SPARQL endpoint, formats the response, and renders a collection of decision-card components.
+The `decision-feed` component represents a feed of `agendapunten`. It fetches data from a SPARQL endpoint, formats the response, and renders a collection of `decision-card` components.
+
+## Properties
+
+- `count` (Number): The number of preview cards to display (default: 10)
+- `height` (String): The height of the decision feed (default: '500px')
+
 
 ## About this release
 
