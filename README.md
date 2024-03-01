@@ -1,10 +1,8 @@
-# LitElement TypeScript starter
+# Decision Feed LitElement Web Component
 
-This project includes a sample component using LitElement with TypeScript.
+This project includes a custom LitElement component written in TypeScript.
 
-This template is generated from the `lit-starter-ts` package in [the main Lit
-repo](https://github.com/lit/lit). Issues and PRs for this template should be
-filed in that repo.
+The component, decision-feed, represents a feed of agendapunten. It fetches data from a SPARQL endpoint, formats the response, and renders a collection of decision-card components.
 
 ## About this release
 
