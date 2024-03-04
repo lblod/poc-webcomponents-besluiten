@@ -212,7 +212,7 @@ export class DecisionFeedElement extends LitElement {
   `;
 
   @property({ type: Number }) count = 10;
-  @property({ type: String }) height = '500px';
+  @property({ type: String }) height = '2000px';
 
   @state()
   private _state: { agendapunten: DecisionResult[] } = { agendapunten: [] };

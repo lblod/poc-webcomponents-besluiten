@@ -1,4 +1,4 @@
-# Decision Feed LitElement Web Component
+# Decision Feed Web Component
 
 This project includes a custom LitElement component written in TypeScript.
 
@@ -9,6 +9,14 @@ The `decision-feed` component represents a feed of `agendapunten`. It fetches da
 - `count` (Number): The number of preview cards to display (default: 10)
 - `height` (String): The height of the decision feed (default: '500px')
 
+
+
+
+## Demo
+
+The "examples" folder contains a demo for Sint-Lievens-Houtem. This demo demonstrates the use of the web component on the homepage of Sint-Lievens-Houtem by simply incorporating the bundled JavaScript file (`decision-feed.bundled.js`) into the index page.
+
+To view the demo, navigate to the "sint-lievens-houtem" subfolder within the "examples" folder and open the `index.html` file in your browser.
 
 ## Setup
 
@@ -22,7 +30,7 @@ npm i
 
 This sample uses the TypeScript compiler to produce JavaScript that runs in modern browsers.
 
-To build the JavaScript version of your component:
+To build the JavaScript version of the component:
 
 ```bash
 npm run build
@@ -69,19 +77,7 @@ npm run serve
 
 There is a development HTML file located at `/dev/index.html` that you can view at http://localhost:8000/dev/index.html. Note that this command will serve your code using Lit's development mode (with more verbose errors). To serve your code against Lit's production mode, use `npm run serve:prod`.
 
-## Editing
 
-If you use VS Code, we highly recommend the [lit-plugin extension](https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin), which enables some extremely useful features for lit-html templates:
-
-- Syntax highlighting
-- Type-checking
-- Code completion
-- Hover-over docs
-- Jump to definition
-- Linting
-- Quick Fixes
-
-The project is setup to recommend lit-plugin to VS Code users if they don't already have it installed.
 
 ## Linting
 
@@ -136,7 +132,3 @@ As stated in the [static site generation](#static-site) section, the bundling an
 We recommend publishing components as unoptimized JavaScript modules and performing build-time optimizations at the application level. This gives build tools the best chance to deduplicate code, remove dead code, and so on.
 
 Please check the [Publishing best practices](https://lit.dev/docs/tools/publishing/#publishing-best-practices) for information on publishing reusable Web Components, and [Build for production](https://lit.dev/docs/tools/production/) for building application projects that include LitElement components, on the Lit site.
-
-## More information
-
-See [Get started](https://lit.dev/docs/getting-started/) on the Lit site for more information.

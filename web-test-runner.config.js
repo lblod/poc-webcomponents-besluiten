@@ -38,7 +38,7 @@ if (!['dev', 'prod'].includes(mode)) {
 // ===========
 // import {browserstackLauncher as createBrowserstackLauncher} from '@web/test-runner-browserstack';
 // const browserstackLauncher = (config) => createBrowserstackLauncher({
-//   capabilities: {ls
+//   capabilities: {
 //     'browserstack.user': process.env.BROWSER_STACK_USERNAME,
 //     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
 //     project: 'decision-feed',
