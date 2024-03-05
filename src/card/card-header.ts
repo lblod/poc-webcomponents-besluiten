@@ -32,6 +32,10 @@ export class CardHeaderElement extends LitElement {
             text-decoration: underline;
             text-decoration-color: var(--primary-color);
         }
+
+        .no-margin {
+                margin-bottom: 0;
+            }
     `;
 
     // Properties of the custom element
@@ -41,8 +45,8 @@ export class CardHeaderElement extends LitElement {
     // Render method that returns a template literal
     override render() {
         return html`
-            <h2 class="au-c-heading--3 closed">${this.header}</h2>
-            <h3>${this.subheader}</h3>
+            <h2 class="au-c-heading--3 closed ${this.subheader ? '' : 'no-margin'}">${this.header}</h2>
+            ${this.subheader ? html`<h3>${this.subheader}</h3>` : ''}
         `;
     }
 }

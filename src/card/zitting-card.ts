@@ -60,10 +60,9 @@ export class ZittingCardElement extends LitElement {
             ? `Zitting ${this.startedAtTime} - ${this.endedAtTime}` 
             : `Zitting ${this.startedAtTime}`;
 
-        const footer = this.startedAtTime + ' - ' + this.source;
+        const footer = this.source;
         return html`
-            <card-header .header="${header}" @click="${this.toggleDetails}"></card-header>
-            <card-footer .footer="${footer}" @click="${this.toggleDetails}"></card-footer>
+            <card-header .header="${header} - ${footer}" @click="${this.toggleDetails}"></card-header>
             ${this.detailsVisible ? html`<zitting-card-details .uri="${this.uri}"></zitting-card-details>` : ''}
         `;
     }

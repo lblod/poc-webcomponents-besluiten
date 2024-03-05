@@ -24,9 +24,13 @@ export class ZittingCardDetailsElement extends LitElement {
             font-size: var(--au-h5);
             line-height: var(--au-global-line-height);
             color: var(--au-gray-900);
-            font-weight: var(--au-medium);
+            font-weight: var(--au-bold);
             text-decoration: underline;
             text-decoration-color: var(--primary-color);
+        }
+
+        .divider {
+            margin-bottom: 3rem;
         }
     `;
 
@@ -77,7 +81,7 @@ export class ZittingCardDetailsElement extends LitElement {
     }
     override render() {
         return html`
-            <h3 class ="au-c-heading--3">Agendapunten:</h3>
+            <!-- <h3 class ="au-c-heading--3">Agendapunten:</h3> -->
             ${this._state.agendapunten
       .map(agendapunt => {
         const header = agendapunt.title;
@@ -98,6 +102,7 @@ export class ZittingCardDetailsElement extends LitElement {
         `;
       })
     }
+    <div class="divider"></div>
         `;
     }
     private formatResponse(sparqlResults: any): DecisionResult[] {
