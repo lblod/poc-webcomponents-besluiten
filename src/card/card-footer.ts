@@ -2,16 +2,16 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
- * @customElement decision-card-footer
- * @class DecisionCardFooterElement
+ * @customElement card-footer
+ * @class CardFooterElement
  * @extends {LitElement}
  * 
  * @property {string} footer - The footer text to display at the bottom of the card
  * 
- * This class represents a custom element that displays the footer of a decision card.
+ * This class represents a custom element that displays the footer of a card.
  */
-@customElement('decision-card-footer')
-export class DecisionCardFooterElement extends LitElement {
+@customElement('card-footer')
+export class CardFooterElement extends LitElement {
     // CSS styles for the custom element
     static override styles = css`
         :host {
@@ -31,6 +31,6 @@ export class DecisionCardFooterElement extends LitElement {
 // Global declaration for the custom element
 declare global {
     interface HTMLElementTagNameMap {
-        'decision-card-footer': DecisionCardFooterElement;
+        'card-footer': CardFooterElement;
     }
 }

@@ -1,21 +1,21 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import "./card/decision-card";
+import "./card/zitting-card";
 
 
 /**
- * @customElement decision-feed
- * @class DecisionFeedElement
+ * @customElement zitting-feed
+ * @class ZittingFeedElement
  * @extends {LitElement}
  * 
  * @property {number} count - The number of preview cards to display
  * 
- * @state {Object} _state - The state object that holds the agendapunten array
+ * @state {Object} _state - The state object that holds the zittingen array
  * 
- * This class represents a custom element that displays a collection of decision article cards.
+ * This class represents a custom element that displays a collection of zitting article cards.
  */
-@customElement('decision-feed')
-export class DecisionFeedElement extends LitElement {
+@customElement('zitting-feed')
+export class ZittingFeedElement extends LitElement {
   static override styles = css`
     :host {
       display: flex;
@@ -215,42 +215,37 @@ export class DecisionFeedElement extends LitElement {
   @property({ type: String }) height = '2000px';
 
   @state()
-  private _state: { agendapunten: DecisionResult[] } = { agendapunten: [] };
+  private _state: { zittingen: ZittingResult[] } = { zittingen: [] };
 
   override connectedCallback() {
     super.connectedCallback();
     this.fetchData();
   }
 
-  override render() {
-    
-    return html`
-    <h1 class="au-c-heading au-c-heading--2">De laatste agendapunten:</h1>
-    <div style="overflow-y: auto; height: ${this.height};">
-    ${this._state.agendapunten
-      .slice(0, this.count)
-      .map(agendapunt => {
-        const header = agendapunt.title;
-        const subheader = '';
-        const body = agendapunt.content;
-        const footer = agendapunt.pubDate + ' - ' + agendapunt.creator;
-        const pdf = agendapunt.link;
-        const uri = agendapunt.uri; //"https://lblod.sint-lievens-houtem.be/LBLODWeb/id/agendapunt/69ba40f1941948649c7b7746df5f7d1d-36845"
-        return html`
-          <decision-card 
-            .header="${header}"
-            .subheader="${subheader}"
-            .body="${body}"
-            .footer="${footer}"
-            .pdf="${pdf}"
-            .uri="${uri}"
-          ></decision-card>
-        `;
-      })
-    }
-    </div>
-    `;
 
+  override render() {
+    return html`
+      <h1 class="au-c-heading au-c-heading--2">De laatste zittingen:</h1>
+      <div style="overflow-y: auto; height: ${this.height};">
+        ${this._state.zittingen
+          .slice(0, this.count)
+          .map(zitting => {
+            const startedAtTime = zitting.startTime;
+            const endedAtTime = zitting.endTime;
+            const source = zitting.bestuursOrgaanLabel;
+            const uri = zitting.zitting;
+            return html`
+              <zitting-card 
+                .startedAtTime="${startedAtTime}"
+                .endedAtTime="${endedAtTime}"
+                .source="${source}"
+                .uri="${uri}"
+              ></zitting-card>
+            `;
+          })
+        }
+      </div>
+    `;
   }
 
 
@@ -263,65 +258,70 @@ export class DecisionFeedElement extends LitElement {
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    SELECT ?uri ?behandeling ?link ?titel ?beschrijving ?bestuursOrgaanLabel ?datumStart
-    WHERE {    
-        ?uri a besluit:Agendapunt;
-            <http://purl.org/dc/terms/title> ?titel;
-            <http://purl.org/dc/terms/description> ?beschrijving.
-        
-        ?behandeling <http://purl.org/dc/terms/subject>  ?uri;
-                   <http://www.w3.org/ns/prov#generated> ?besluit.
+    SELECT *
+    WHERE {
+      ?zitting a besluit:Zitting .
+      OPTIONAL { ?zitting besluit:geplandeStart ?start . }
+      OPTIONAL { ?zitting prov:startedAtTime ?startTime . }
+      OPTIONAL { ?zitting prov:endedAtTime ?endTime . }
+      OPTIONAL { ?zitting besluit:heeftAanwezigeBijStart ?aanwezige . }
+      OPTIONAL { ?zitting besluit:heeftNotulen ?notulen . }
+      OPTIONAL { ?zitting besluit:heeftSecretaris ?secretaris . }
+      OPTIONAL { ?zitting besluit:heeftVoorzitter ?voorzitter . }
+      OPTIONAL { ?zitting besluit:heeftZittingsverslag ?zittingsverslag . }
+      OPTIONAL { ?zitting besluit:isGehoudenDoor ?gehoudenDoor . }
+      OPTIONAL { ?gehoudenDoor <http://www.w3.org/2004/02/skos/core#prefLabel> ?bestuursOrgaanLabel.}
+      OPTIONAL { ?zitting prov:atLocation ?location . }
+    }
+    ORDER BY DESC(?startTime)
+    LIMIT 10`;
 
-        ?besluit <http://data.europa.eu/eli/ontology#date_publication> ?datumPublicatie;
-                   <http://www.w3.org/ns/prov#value> ?link.
-        
-        ?zitting besluit:behandelt ?uri;
-                 besluit:isGehoudenDoor ?bestuursOrgaan;
-                 besluit:geplandeStart ?datumStart.
-                 
-        ?bestuursOrgaan <http://www.w3.org/2004/02/skos/core#prefLabel> ?bestuursOrgaanLabel.
-      
-
-    }ORDER BY DESC(?datumStart) LIMIT 10`;
-    
-    
     const requestUrl = `https://sint-lievens-houtem.lblod-local-dev.s.redhost.be/sparql?query=${encodeURIComponent(query)}`;
 
     const response = await fetch(requestUrl);
     const json = await response.json();
-    const agendapunten = this.formatResponse(json.results.bindings);
+    const zittingen = this.formatResponse(json.results.bindings);
 
-    this._state = { agendapunten };
+    this._state = { zittingen };
   }
 
-  private formatResponse(sparqlResults: any): DecisionResult[] {
+  private formatResponse(sparqlResults: any): ZittingResult[] {
     return sparqlResults.map((result: any) => ({
-      uri: result.uri.value,
-      behandeling: result.behandeling.value,
-      title: result.titel.value,
-      link: result.link.value,
-      pubDate: new Date(result.datumStart.value).toLocaleDateString("nl-BE"),
-      creator: result.bestuursOrgaanLabel.value,
-      content: result.beschrijving.value,
+      zitting: result.zitting.value,
+      start: result.start ? new Date(result.start.value).toLocaleDateString("nl-BE") : '',
+      startTime: result.startTime ? new Date(result.startTime.value).toLocaleDateString("nl-BE") : '',
+      endTime: result.endTime ? new Date(result.endTime.value).toLocaleDateString("nl-BE") : '',
+      aanwezige: result.aanwezige ? result.aanwezige.value : '',
+      notulen: result.notulen ? result.notulen.value : '',
+      secretaris: result.secretaris ? result.secretaris.value : '',
+      voorzitter: result.voorzitter ? result.voorzitter.value : '',
+      zittingsverslag: result.zittingsverslag ? result.zittingsverslag.value : '',
+      gehoudenDoor: result.gehoudenDoor ? result.gehoudenDoor.value : '',
+      bestuursOrgaanLabel: result.bestuursOrgaanLabel ? result.bestuursOrgaanLabel.value : '',
+      location: result.location ? result.location.value : '',
     }));
   }
 }
 
-interface DecisionResult {
-  uri: string;
-  behandeling: string;
-  title: string;
-  link: string;
-  pubDate: Date;
-  creator: string;
-  content: string;
-}
-
+  interface ZittingResult {
+    zitting: string;
+    start: string;
+    startTime: string;
+    endTime: string;
+    aanwezige: string;
+    notulen: string;
+    secretaris: string;
+    voorzitter: string;
+    zittingsverslag: string;
+    gehoudenDoor: string;
+    bestuursOrgaanLabel: string;
+    location: string;
+  }
 
 
 
 declare global {
   interface HTMLElementTagNameMap {
-    'decision-feed': DecisionFeedElement;
+    'zitting-feed': ZittingFeedElement;
   }
 }

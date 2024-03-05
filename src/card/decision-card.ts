@@ -1,12 +1,12 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import "./decision-card-header";
-import "./decision-card-body";
-import "./decision-card-footer";
+import "./card-header";
+import "./card-body";
+import "./card-footer";
 import "./details/decision-card-details";
 
 /**
- * @customElement decision-card
+ * @customElement card
  * @class DecisionCardElement
  * @extends {LitElement}
  * 
@@ -27,23 +27,23 @@ export class DecisionCardElement extends LitElement {
             display: flex;
             flex-direction: column;
             gap: 1em;
-            background-color: var(--decision-card-background-color, white);
-            border: var(--decision-card-border, solid 1px lightgray);
-            border-radius: var(--decision-card-border-radius, 3px);
+            background-color: var(--card-background-color, white);
+            border: var(--card-border, solid 1px lightgray);
+            border-radius: var(--card-border-radius, 3px);
             font-size: var(--au-global-font-size);
             padding: 1em;
         }
-        decision-card-header {
-            --decision-header-color: var(--decision-card-header-color);
+        card-header {
+            --header-color: var(--card-header-color);
             cursor: pointer;
         }
 
-        decision-card-body {
-            --decision-body-color: var(--decision-card-body-color);
+        card-body {
+            --body-color: var(--card-body-color);
             cursor: pointer;
         }
-        decision-card-footer {
-            --decision-footer-color: var(--decision-card-footer-color);
+        card-footer {
+            --footer-color: var(--card-footer-color);
         }
     `;
 
@@ -65,9 +65,9 @@ export class DecisionCardElement extends LitElement {
     // Render method that returns a template literal
     override render() {
         return html`
-            <decision-card-header .header="${this.header}" .subheader="${this.subheader}" @click="${this.toggleDetails}"></decision-card-header>
-            <decision-card-body .body="${this.body}" @click="${this.toggleDetails}"></decision-card-body>
-            <decision-card-footer .footer="${this.footer}"></decision-card-footer>
+            <card-header .header="${this.header}" .subheader="${this.subheader}" @click="${this.toggleDetails}"></card-header>
+            <card-body .body="${this.body}" @click="${this.toggleDetails}"></card-body>
+            <card-footer .footer="${this.footer}"></card-footer>
             ${this.detailsVisible ? html`<decision-card-details .pdf="${this.pdf}" .uri="${this.uri}"></decision-card-details>` : ''}
         `;
     }

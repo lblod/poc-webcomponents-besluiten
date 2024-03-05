@@ -2,16 +2,16 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
- * @customElement decision-card-body
- * @class DecisionCardBodyElement
+ * @customElement card-body
+ * @class CardBodyElement
  * @extends {LitElement}
  * 
  * @property {string} body - The body text to display in the middle of the card
  * 
- * This class represents a custom element that displays the body of a decision card.
+ * This class represents a custom element that displays the body of a card.
  */
-@customElement('decision-card-body')
-export class DecisionCardBodyElement extends LitElement {
+@customElement('card-body')
+export class CardBodyElement extends LitElement {
     // CSS styles for the custom element
     static override styles = css`
         :host {
@@ -34,6 +34,6 @@ export class DecisionCardBodyElement extends LitElement {
 // Global declaration for the custom element
 declare global {
     interface HTMLElementTagNameMap {
-        'decision-card-body': DecisionCardBodyElement;
+        'card-body': CardBodyElement;
     }
 }

@@ -10,9 +10,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  input: 'decision-feed.js',
+  input: 'zitting-feed.js',
   output: {
-    file: 'decision-feed.bundled.js',
+    file: 'zitting-feed.bundled.js',
     format: 'esm',
   },
   onwarn(warning) {

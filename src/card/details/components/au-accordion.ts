@@ -50,8 +50,8 @@ export class AuAccordionElement extends LitElement {
       .au-c-accordion .au-c-button--link {
         text-decoration: none;
         font-weight: var(--au-medium);
-        font-size: var(--au-h4);
-        line-height: var(--au-global-line-height)
+        font-size: var(--au-h5);
+        line-height: var(--au-global-line-height);
 
         padding-left: 0;
         text-align: left;
@@ -74,7 +74,7 @@ export class AuAccordionElement extends LitElement {
 
 
     .accordion-subtitle {
-      font-size: var(--au-para);
+      font-size: var(--au-base);
       font-weight: var(--au-light);
 
     }

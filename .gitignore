@@ -10,6 +10,12 @@ decision-feed.js.map
 decision-feed.d.ts
 decision-feed.d.ts.map
 
+
+zitting-feed.js
+zitting-feed.js.map
+zitting-feed.d.ts
+zitting-feed.d.ts.map
+
 # only generated for size check
 # decision-feed.bundled.js
 

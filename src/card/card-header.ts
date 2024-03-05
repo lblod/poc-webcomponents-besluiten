@@ -2,25 +2,25 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 /**
- * @customElement decision-card-header
- * @class DecisionCardHeaderElement
+ * @customElement card-header
+ * @class CardHeaderElement
  * @extends {LitElement}
  * 
  * @property {string} header - The larger header to use at the top of the card
  * @property {string} subheader - The smaller header to use at the top of the card
  * 
- * This class represents a custom element that displays the header of a decision card.
+ * This class represents a custom element that displays the header of a card.
  */
-@customElement('decision-card-header')
-export class DecisionCardHeaderElement extends LitElement {
+@customElement('card-header')
+export class CardHeaderElement extends LitElement {
     // CSS styles for the custom element
     static override styles = css`
         :host {
             flex-grow: 1;
-            color: var(--decision-header-color);
+            color: var(--header-color);
         }
         .au-c-heading--3  {
-            font-size: var(--au-h3);
+            font-size: var(--au-h5);
             line-height: var(--au-global-line-height);
             color: var(--au-gray-900);
             font-weight: var(--au-medium);
@@ -50,6 +50,6 @@ export class DecisionCardHeaderElement extends LitElement {
 // Global declaration for the custom element
 declare global {
     interface HTMLElementTagNameMap {
-        'decision-card-header': DecisionCardHeaderElement;
+        'card-header': CardHeaderElement;
     }
 }
