@@ -557,19 +557,20 @@ const se=e=>(t,r)=>{void 0!==r?r.addInitializer((()=>{customElements.define(e,t)
           </div>
           <div id="ember-basic-dropdown-content-ember7" class="ember-basic-dropdown-content-placeholder" style="display: none;"></div>
         </div> -->
+        <div class="au-c-form-row">
+          <div class="au-c-form-column ">
+            <label class="au-c-label   " for="date-from">
+              Startdatum
+            </label>
+            <input class="au-c-input au-c-input--block " min="2015-01-01" max="2100-12-31" id="date-from" type="date">  
+          </div>
 
-        <div class="au-c-form-row ">
-          <label class="au-c-label   " for="date-from">
-            Startdatum
-          </label>
-          <input class="au-c-input au-c-input--block " min="2015-01-01" max="2100-12-31" id="date-from" type="date">  
-        </div>
-
-        <div class="au-c-form-row ">
-          <label class="au-c-label   " for="date-to">
-            Einddatum 
-          </label>
-          <input class="au-c-input au-c-input--block " min="2015-01-01" max="2100-12-31" id="date-to" type="date">  
+          <div class="au-c-form-column ">
+            <label class="au-c-label   " for="date-to">
+              Einddatum 
+            </label>
+            <input class="au-c-input au-c-input--block " min="2015-01-01" max="2100-12-31" id="date-to" type="date">  
+          </div>
         </div>
 
       </div>
@@ -785,7 +786,7 @@ const se=e=>(t,r)=>{void 0!==r?r.addInitializer((()=>{customElements.define(e,t)
       border: 1px solid var(--au-gray-900);
       cursor: pointer;
 
-      font-size: var(--au-small);
+      font-size: var(--au-base);
       font-weight: var(--au-medium);
 
       margin:0.1rem;
@@ -1280,9 +1281,12 @@ const se=e=>(t,r)=>{void 0!==r?r.addInitializer((()=>{customElements.define(e,t)
       padding: 0 1.2rem .1ex;
       border-radius: 0.3rem;
   }
-
   .au-c-form-row{
+    display: flex;
+  }
+  .au-c-form-column{
     margin-bottom: 1.2rem;
+    margin-right: 1.2rem;
   }
 
   .au-tags{
