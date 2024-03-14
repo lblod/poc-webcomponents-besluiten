@@ -21,7 +21,7 @@ The "examples" folder contains two demos: one for `zitting-feed` and another for
 
 The `zitting-feed` demo demonstrates the use of the `zitting-feed` web component. This demo can be viewed by navigating to the "examples" folder and opening the `index-zittingen.html` file in your browser. The `zitting-feed` component is incorporated into the page by including the bundled JavaScript file (`zitting-feed.bundled.js`).
 
-The `decision-feed` demo, which is a simpler version, demonstrates the `decision-feed` web component that presents a feed of `agendapunten`. To view this demo, go to the "examples" folder and open the `index-agendapunten.html` file in your browser. The `decision-feed` component is integrated into the page by including the `decision-feed.bundled.js` bundled JavaScript file.
+The `decision-feed` demo, which is a simpler version, demonstrates the `decision-feed` web component that presents a feed of agendapunten. To view this demo, go to the "examples" folder and open the `index-agendapunten.html` file in your browser. The `decision-feed` component is integrated into the page by including the `decision-feed.bundled.js` bundled JavaScript file.
 
 
 ## Setup
