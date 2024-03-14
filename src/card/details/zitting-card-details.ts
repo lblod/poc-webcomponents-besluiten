@@ -8,6 +8,7 @@ import '../decision-card';
  * @extends {LitElement}
  * 
  * @property {string} uri - The zitting's URI
+ * @property {string} harvesterEndpoint - The endpoint of the harvester to fetch data from
  * 
  * This class represents a custom element that displays a zitting card.
  */
@@ -19,7 +20,6 @@ export class ZittingCardDetailsElement extends LitElement {
     static override styles = css`
         /* Add your styles here */
 
-
         .au-c-heading--3  {
             font-size: var(--au-h5);
             line-height: var(--au-global-line-height);
@@ -30,11 +30,13 @@ export class ZittingCardDetailsElement extends LitElement {
         }
 
         .divider {
-            margin-bottom: 3rem;
+            margin-bottom: 5rem;
         }
     `;
 
-    @property() uri = '';
+    @property({ type: String }) uri = '';
+    @property({ type: String }) harvesterEndpoint = '';
+
 
     @state()
     private _state: { agendapunten: DecisionResult[] } = { agendapunten: [] };
@@ -72,7 +74,7 @@ export class ZittingCardDetailsElement extends LitElement {
             }
             ORDER BY DESC(?datumStart) LIMIT 10`;
 
-        const requestUrl = `https://sint-lievens-houtem.lblod-local-dev.s.redhost.be/sparql?query=${encodeURIComponent(query)}`;
+        const requestUrl = `${this.harvesterEndpoint}?query=${encodeURIComponent(query)}`;
 
         const response = await fetch(requestUrl);
         const json = await response.json();
@@ -82,29 +84,35 @@ export class ZittingCardDetailsElement extends LitElement {
     override render() {
         return html`
             <!-- <h3 class ="au-c-heading--3">Agendapunten:</h3> -->
-            ${this._state.agendapunten
-      .map(agendapunt => {
-        const header = agendapunt.title;
-        const subheader = '';
-        const body = agendapunt.content;
-        const footer = agendapunt.pubDate + ' - ' + agendapunt.creator;
-        const pdf = agendapunt.link;
-        const uri = "https://lblod.sint-lievens-houtem.be/LBLODWeb/id/agendapunt/69ba40f1941948649c7b7746df5f7d1d-36845"
-        return html`
-          <decision-card 
-            .header="${header}"
-            .subheader="${subheader}"
-            .body="${body}"
-            .footer="${footer}"
-            .pdf="${pdf}"
-            .uri="${uri}"
-          ></decision-card>
-        `;
-      })
+            ${this._state.agendapunten.map(agendapunt => {
+                const header = agendapunt.title;
+                const subheader = '';
+                const body = agendapunt.content;
+                const footer = agendapunt.pubDate + ' - ' + agendapunt.creator;
+                const pdf = agendapunt.link;
+                const uri = agendapunt.uri;//"https://lblod.sint-lievens-houtem.be/LBLODWeb/id/agendapunt/69ba40f1941948649c7b7746df5f7d1d-36845"
+
+                return html`
+                    <decision-card 
+                        .header="${header}"
+                        .subheader="${subheader}"
+                        .body="${body}"
+                        .footer="${footer}"
+                        .pdf="${pdf}"
+                        .uri="${uri}"
+                        .harvesterEndpoint="${this.harvesterEndpoint}"
+                    ></decision-card>
+                    `;
+                 })
+            }
+            <div class="divider"></div>
+            `;
+
+
     }
-    <div class="divider"></div>
-        `;
-    }
+
+
+    // move to a separate file as it's a duplicate of the function in decision-feed.ts
     private formatResponse(sparqlResults: any): DecisionResult[] {
         return sparqlResults.map((result: any) => ({
           uri: result.uri.value,
@@ -118,6 +126,7 @@ export class ZittingCardDetailsElement extends LitElement {
       }
     }
     
+// move to a separate file as it's a duplicate of the function in decision-feed.ts
 interface DecisionResult {
       uri: string;
       behandeling: string;

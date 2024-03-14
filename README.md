@@ -1,22 +1,28 @@
-# Decision Feed Web Component
 
-This project includes a custom LitElement component written in TypeScript.
+# Zitting Feed Web Component
 
-The `decision-feed` component represents a feed of `agendapunten`. It fetches data from a SPARQL endpoint, formats the response, and renders a collection of `decision-card` components.
+This project includes a custom LitElement component developed in TypeScript. The design, styling, and logic of this web component are inspired by the work done at https://github.com/lblod/frontend-burgernabije-besluitendatabank.git. This to ensure a cohesive design and facilitate future modifications.
+
+The `zitting-feed` component presents a feed of `zittingen`. It fetches data from a SPARQL endpoint, processes the response, and subsequently renders a series of `zitting-card` components. Each `zitting-card` component includes a `zitting-card-details` component. This component fetches all associated `agendapunten` based on the `zitting` URI from the harvester's SPARQL endpoint and returns an overview of `agendapunten`. This overview renders a list of `decision-card` components. Each `decision-card` is composed of a `card-header`, `card-body`, `card-footer`, and `decision-card-details`. The `decision-card-details` further includes `decision-card-details-besluit` and `decision-card-details-voting` components, which display a link to the decision's PDF and the voting results, respectively.
 
 ## Properties
 
-- `count` (Number): The number of preview cards to display (default: 10)
-- `height` (String): The height of the decision feed (default: '500px')
-
+- `harvesterEndpoint` (String): The URL of the SPARQL endpoint to fetch data from (default: https://sint-lievens-houtem.lblod-local-dev.s.redhost.be/sparql)
+- `height` (String): The height of the scrollable div
+- `batchSize` (Number): The number of items to fetch in each batch (default: 10)
+- `searchRange` (Number): The max-range to search for items (default: 100)
+- `scrollOffset` (Number): The scroll offset in pixels to trigger the next batch fetch (default: 50)
 
 
 
 ## Demo
 
-The "examples" folder contains a demo for Sint-Lievens-Houtem. This demo demonstrates the use of the web component on the homepage of Sint-Lievens-Houtem by simply incorporating the bundled JavaScript file (`decision-feed.bundled.js`) into the index page.
+The "examples" folder contains two demos: one for `zitting-feed` and another for `decision-feed`.
 
-To view the demo, navigate to the "sint-lievens-houtem" subfolder within the "examples" folder and open the `index.html` file in your browser.
+The `zitting-feed` demo demonstrates the use of the `zitting-feed` web component. This demo can be viewed by navigating to the "examples" folder and opening the `index-zittingen.html` file in your browser. The `zitting-feed` component is incorporated into the page by including the bundled JavaScript file (`zitting-feed.bundled.js`).
+
+The `decision-feed` demo, which is a simpler version, demonstrates the `decision-feed` web component that presents a feed of `agendapunten`. To view this demo, go to the "examples" folder and open the `index-agendapunten.html` file in your browser. The `decision-feed` component is integrated into the page by including the `decision-feed.bundled.js` bundled JavaScript file.
+
 
 ## Setup
 

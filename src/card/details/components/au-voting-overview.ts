@@ -14,7 +14,8 @@ import { customElement, property } from 'lit/decorators.js';
 export class AuVotingOverviewElement extends LitElement {
     // CSS styles for the custom element
     static override styles = css`
-                .c-chart__pie {
+        
+        .c-chart__pie {
             margin: 0 auto;
             transform: rotate(-90deg);
             border-radius: 50%;

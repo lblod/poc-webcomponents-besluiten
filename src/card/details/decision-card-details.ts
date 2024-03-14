@@ -10,6 +10,7 @@ import "./decision-card-details-voting";
  * 
  * @property {string} uri - The URI of the decision
  * @property {string} pdf - The URL to the PDF document associated with the decision
+ * @property {string} harvesterEndpoint - The endpoint of the harvester to fetch data from  
  * 
  * This class represents a custom element that displays the details of a decision card.
  */
@@ -20,14 +21,15 @@ export class DecisionCardDetailsElement extends LitElement {
     `;
 
     // Properties of the custom element
-    @property() uri = '';
-    @property() pdf = '';
+    @property({type:String}) uri = '';
+    @property({type:String}) pdf = '';
+    @property({type:String}) harvesterEndpoint = '';
 
     // Render method that returns a template literal
     override render() {
         return html`
             <decision-card-details-besluit .pdf="${this.pdf}"></decision-card-details-besluit>
-            <decision-card-details-voting .uri="${this.uri}"></decision-card-details-voting>
+            <decision-card-details-voting .uri="${this.uri}" .harvesterEndpoint="${this.harvesterEndpoint}"></decision-card-details-voting>
             <!-- <decision-card-details-agenda .url="${this.uri}"></decision-card-details-agenda> -->
         `;
     }

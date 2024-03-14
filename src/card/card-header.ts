@@ -17,8 +17,7 @@ export class CardHeaderElement extends LitElement {
     static override styles = css`
         :host {
             flex-grow: 1;
-            color: var(--header-color);
-        }
+         }
         .au-c-heading--3  {
             font-size: var(--au-h5);
             line-height: var(--au-global-line-height);

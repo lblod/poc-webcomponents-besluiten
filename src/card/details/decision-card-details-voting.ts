@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import "./components/au-voting-overview";
+import "./components/au-accordion";
+import "./components/au-alert";
 
 interface Vote {
   subject: string;
@@ -24,6 +26,7 @@ interface VoteResult {
  * @extends {LitElement}
  * 
  * @property {string} uri - The URI of the decision
+ * @property {string} harvesterEndpoint - The endpoint of the harvester to fetch data from
  * 
  * @state {Object} _state - The state object that holds the voting results
  * @state {boolean} _loading - The loading state of the component
@@ -44,7 +47,8 @@ export class DecisionCardDetailsVotingElement extends LitElement {
     }
   `;
 
-  @property() uri = '';
+  @property({ type: String }) uri = '';
+  @property({ type: String }) harvesterEndpoint = '';
 
 
   @state() private _state: { voting: VoteResult[] } = { voting: [] };
@@ -95,7 +99,7 @@ export class DecisionCardDetailsVotingElement extends LitElement {
         }
       }`;
 
-      const requestUrl = `https://sint-lievens-houtem.lblod-local-dev.s.redhost.be/sparql?query=${encodeURIComponent(query)}`;
+      const requestUrl = `${this.harvesterEndpoint}?query=${encodeURIComponent(query)}`;
 
       const response = await fetch(requestUrl);
       const json = await response.json();

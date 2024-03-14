@@ -9,6 +9,8 @@ import "./card/decision-card";
  * @extends {LitElement}
  * 
  * @property {number} count - The number of preview cards to display
+ * @property {string} height - The height of the decision feed
+ * @property {string} harvesterEndpoint - The endpoint of the harvester to fetch data from
  * 
  * @state {Object} _state - The state object that holds the agendapunten array
  * 
@@ -196,6 +198,8 @@ export class DecisionFeedElement extends LitElement {
         font-weight: var(--au-medium);
         line-height: var(--au-global-line-height);
 
+        font-family: "Maven Pro", Arial, Helvetica, "Helvetica Neue", sans-serif;
+
         text-decoration: underline;
         text-decoration-color: var(--primary-color);
 
@@ -213,6 +217,7 @@ export class DecisionFeedElement extends LitElement {
 
   @property({ type: Number }) count = 10;
   @property({ type: String }) height = '2000px';
+  @property({ type: String }) harvesterEndpoint = '';
 
   @state()
   private _state: { agendapunten: DecisionResult[] } = { agendapunten: [] };
@@ -263,29 +268,32 @@ export class DecisionFeedElement extends LitElement {
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    SELECT ?uri ?behandeling ?link ?titel ?beschrijving ?bestuursOrgaanLabel ?datumStart
+    SELECT DISTINCT ?uri (SAMPLE(?behandeling) AS ?behandeling) (SAMPLE(?link) AS ?link) (SAMPLE(?titel) AS ?titel) 
+            (SAMPLE(?beschrijving) AS ?beschrijving) (SAMPLE(?bestuursOrgaanLabel) AS ?bestuursOrgaanLabel) 
+            (SAMPLE(?datumStart) AS ?datumStart)
     WHERE {    
-        ?uri a besluit:Agendapunt;
-            <http://purl.org/dc/terms/title> ?titel;
-            <http://purl.org/dc/terms/description> ?beschrijving.
-        
-        ?behandeling <http://purl.org/dc/terms/subject>  ?uri;
-                   <http://www.w3.org/ns/prov#generated> ?besluit.
-
-        ?besluit <http://data.europa.eu/eli/ontology#date_publication> ?datumPublicatie;
-                   <http://www.w3.org/ns/prov#value> ?link.
-        
-        ?zitting besluit:behandelt ?uri;
-                 besluit:isGehoudenDoor ?bestuursOrgaan;
-                 besluit:geplandeStart ?datumStart.
-                 
-        ?bestuursOrgaan <http://www.w3.org/2004/02/skos/core#prefLabel> ?bestuursOrgaanLabel.
+      ?uri a besluit:Agendapunt;
+        dc:title ?titel;
+        dc:description ?beschrijving.
       
+      ?behandeling dc:subject ?uri;
+             prov:generated ?besluit.
 
-    }ORDER BY DESC(?datumStart) LIMIT 10`;
+      ?besluit schema:date_publication ?datumPublicatie;
+            prov:value ?link.
+      
+      ?zitting besluit:behandelt ?uri;
+           besluit:isGehoudenDoor ?bestuursOrgaan;
+           besluit:geplandeStart ?datumStart.
+           
+      ?bestuursOrgaan <http://www.w3.org/2004/02/skos/core#prefLabel> ?bestuursOrgaanLabel.
+    }
+    GROUP BY ?uri
+    ORDER BY DESC(?datumStart)
+    LIMIT 10`;
     
     
-    const requestUrl = `https://sint-lievens-houtem.lblod-local-dev.s.redhost.be/sparql?query=${encodeURIComponent(query)}`;
+    const requestUrl = `${this.harvesterEndpoint}?query=${encodeURIComponent(query)}`;
 
     const response = await fetch(requestUrl);
     const json = await response.json();
@@ -316,9 +324,6 @@ interface DecisionResult {
   creator: string;
   content: string;
 }
-
-
-
 
 declare global {
   interface HTMLElementTagNameMap {

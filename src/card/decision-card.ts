@@ -16,6 +16,7 @@ import "./details/decision-card-details";
  * @property {string} footer - The card's footer content
  * @property {string} pdf - The URL of the PDF document associated with the card
  * @property {string} uri - The card's Agendapunt URI
+ * @property {string} harvesterEndpoint - The endpoint of the harvester to fetch data from
  * 
  * This class represents a custom element that displays a decision card.
  */
@@ -33,27 +34,20 @@ export class DecisionCardElement extends LitElement {
             font-size: var(--au-global-font-size);
             padding: 1em;
         }
-        card-header {
-            --header-color: var(--card-header-color);
+        card-header, card-body  {
             cursor: pointer;
         }
 
-        card-body {
-            --body-color: var(--card-body-color);
-            cursor: pointer;
-        }
-        card-footer {
-            --footer-color: var(--card-footer-color);
-        }
     `;
 
     // Properties of the custom element
-    @property() header = '';
-    @property() subheader = '';
-    @property() body = '';
-    @property() footer = '';
-    @property() pdf = '';
-    @property() uri = '';
+    @property({type:String}) header = '';
+    @property({type:String}) subheader = '';
+    @property({type:String}) body = '';
+    @property({type:String}) footer = '';
+    @property({type:String}) pdf = '';
+    @property({type:String}) uri = '';
+    @property({type:String}) harvesterEndpoint = '';
 
 
     @state() private detailsVisible = false;
@@ -68,7 +62,7 @@ export class DecisionCardElement extends LitElement {
             <card-header .header="${this.header}" .subheader="${this.subheader}" @click="${this.toggleDetails}"></card-header>
             <card-body .body="${this.body}" @click="${this.toggleDetails}"></card-body>
             <card-footer .footer="${this.footer}"></card-footer>
-            ${this.detailsVisible ? html`<decision-card-details .pdf="${this.pdf}" .uri="${this.uri}"></decision-card-details>` : ''}
+            ${this.detailsVisible ? html`<decision-card-details .pdf="${this.pdf}" .uri="${this.uri}" .harvesterEndpoint="${this.harvesterEndpoint}"></decision-card-details>` : ''}
         `;
     }
 }

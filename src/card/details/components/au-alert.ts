@@ -16,7 +16,7 @@ import { customElement, property } from 'lit/decorators.js';
 export class AuAlertElement extends LitElement {
   // CSS styles for the custom element
   static override styles = css`
-          .au-alert {
+      .au-alert {
         color: var(--au-gray-900);
         display: flex;
         font-family: var(--au-font);

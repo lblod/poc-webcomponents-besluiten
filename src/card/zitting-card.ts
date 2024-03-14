@@ -14,6 +14,7 @@ import "./details/zitting-card-details";
  * @property {string} endedAtTime - The end time of the zitting
  * @property {string} source - The source of the zitting
  * @property {string} uri - The zitting's URI
+ * @property {string} harvesterEndpoint - The endpoint of the harvester to fetch data from
  * 
  * This class represents a custom element that displays a zitting card.
  */
@@ -30,17 +31,9 @@ export class ZittingCardElement extends LitElement {
             font-size: var(--au-global-font-size);
             padding: 1em;
         }
-        card-header {
-            --header-color: var(--card-header-color);
+        
+        card-header, card-body {
             cursor: pointer;
-        }
-
-        card-body {
-            --body-color: var(--card-body-color);
-            cursor: pointer;
-        }
-        card-footer {
-            --footer-color: var(--card-footer-color);
         }
     `;
 
@@ -48,14 +41,21 @@ export class ZittingCardElement extends LitElement {
     @property() endedAtTime = '';
     @property() source = '';
     @property() uri = '';
+    @property() harvesterEndpoint = '';
 
-    @state() private detailsVisible = false;
+
+    @state() detailsVisible = false;
 
     private toggleDetails() {
         this.detailsVisible = !this.detailsVisible;
     }
 
+    public resetDetails() {
+        this.detailsVisible = false;
+    }
+
     override render() {
+
         const header = this.endedAtTime 
             ? `Zitting ${this.startedAtTime} - ${this.endedAtTime}` 
             : `Zitting ${this.startedAtTime}`;
@@ -63,7 +63,7 @@ export class ZittingCardElement extends LitElement {
         const footer = this.source;
         return html`
             <card-header .header="${header} - ${footer}" @click="${this.toggleDetails}"></card-header>
-            ${this.detailsVisible ? html`<zitting-card-details .uri="${this.uri}"></zitting-card-details>` : ''}
+            ${this.detailsVisible ? html`<zitting-card-details .uri="${this.uri}" .harvesterEndpoint="${this.harvesterEndpoint}"></zitting-card-details>` : ''}
         `;
     }
 }
